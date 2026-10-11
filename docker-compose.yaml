@@ -1,6 +1,6 @@
 services:
   backend:
-    build: ./backend
+    image: isys-lab1-backend
     restart: on-failure
     ports:
       - "8080:8080"
