@@ -15,6 +15,7 @@ RUN --mount=type=cache,target=/root/.m2,sharing=locked \
 FROM quay.io/wildfly/wildfly:40.0.1.Final-jdk17
 
 USER jboss
+COPY ./standalone.xml /opt/jboss/wildfly/standalone/configuration/standalone.xml 
 COPY --from=build --chown=jboss:jboss main/target/main-1.0.0.war /opt/jboss/wildfly/standalone/deployments/ROOT.war
 
 EXPOSE 8080 8080
