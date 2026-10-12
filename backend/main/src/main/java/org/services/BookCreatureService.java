@@ -22,11 +22,13 @@ public class BookCreatureService {
         );
     }
 
+    @Transactional
     public Optional<BookCreatureDto> findById(int id) {
         return bookRepository.findById(id)
                 .map(BookCreatureDto::fromModel);
     }
 
+    @Transactional
     public PageDto<BookCreatureDto> findAll(int page, int size, String nameFilter) {
         String pattern = nameFilter == null ? "" : nameFilter;
         long first = (long) page * size + 1;
@@ -44,7 +46,7 @@ public class BookCreatureService {
         return bookRepository.findById(id)
                 .map(existing -> {
                     var bookCreature = dto.toModel();
-                    
+
                     bookCreature.setId(existing.getId());
                     bookCreature.setCreationDate(existing.getCreationDate());
 
