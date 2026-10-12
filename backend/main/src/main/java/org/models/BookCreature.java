@@ -3,6 +3,8 @@ package org.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.type.PostgreSQLEnumJdbcType;
 
 import java.time.LocalDate;
 
@@ -35,6 +37,7 @@ public class BookCreature {
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     @Column(name = "creature_type", nullable = false, columnDefinition = "BookCreatureType")
     private BookCreatureType creatureType;
 

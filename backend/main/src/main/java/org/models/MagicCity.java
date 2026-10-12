@@ -3,6 +3,8 @@ package org.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.type.PostgreSQLEnumJdbcType;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
@@ -30,6 +32,7 @@ public class MagicCity {
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     @Column(name = "governor", nullable = false, columnDefinition = "BookCreatureType not null")
     private BookCreatureType governor;
 
