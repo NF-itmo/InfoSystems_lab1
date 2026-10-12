@@ -37,7 +37,9 @@ public class MagicCityDto {
                     value.getArea(),
                     value.getPopulation(),
                     value.getEstablishmentDate(),
-                    BookCreatureType.valueOf(value.getGovernor().name()),
+                    value.getGovernor() == null
+                            ? null
+                            : BookCreatureType.valueOf(value.getGovernor().name()),
                     value.getCapital(),
                     value.getPopulationDensity()
             );
@@ -54,7 +56,11 @@ public class MagicCityDto {
                     .area(value.getArea())
                     .population(value.getPopulation())
                     .establishmentDate(value.getEstablishmentDate())
-                    .governor(org.models.BookCreatureType.valueOf(value.getGovernor().name()))
+                    .governor(
+                            value.getGovernor() == null
+                                    ? null
+                                    : org.models.BookCreatureType.valueOf(value.getGovernor().name())
+                    )
                     .capital(value.getCapital())
                     .populationDensity(value.getPopulationDensity())
                     .build();

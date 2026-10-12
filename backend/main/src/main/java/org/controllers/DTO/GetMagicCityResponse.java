@@ -30,7 +30,9 @@ public record GetMagicCityResponse(
                     dto.getArea(),
                     dto.getPopulation(),
                     dto.getEstablishmentDate(),
-                    BookCreatureType.valueOf(dto.getGovernor().name()),
+                    dto.getGovernor() == null
+                            ? null
+                            : BookCreatureType.valueOf(dto.getGovernor().name()),
                     dto.getCapital(),
                     dto.getPopulationDensity()
             );
