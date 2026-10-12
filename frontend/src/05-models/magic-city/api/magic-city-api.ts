@@ -20,7 +20,7 @@ export const getMagicCity = async (name: string): Promise<MagicCity> => {
 }
 
 export const updateMagicCity = async (name: string, payload: MagicCity): Promise<void> => {
-  request<void>(`${MAGIC_CITIES_API_PATH}/${encodeURIComponent(name)}`, {
+  return request<void>(`${MAGIC_CITIES_API_PATH}/${encodeURIComponent(name)}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),

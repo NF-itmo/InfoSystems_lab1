@@ -1,6 +1,8 @@
 import styles from "./index.module.css"
-import { BooksFeed } from "@/03-widgets/books-feed";
-import { OrdersFeed } from "@/03-widgets/orders-feed";
+import { BookCreaturesFeed } from "@/03-widgets/book-creaures-feed";
+import { CoordinatesFeed } from "@/03-widgets/coordinates-feed";
+import { MagicCitiesFeed } from "@/03-widgets/magic-cities-feed";
+import { RingsFeed } from "@/03-widgets/rings-feed";
 
 type Props = {};
 
@@ -10,8 +12,10 @@ export const HomePage = (
   return (
     <div className={styles.pageWrapper}>
       <main className={styles.content}>
-        <BooksFeed/>
-        <OrdersFeed/>
+        <BookCreaturesFeed/>
+        <CoordinatesFeed/>
+        <MagicCitiesFeed/>
+        <RingsFeed/>
       </main>
     </div>
   )

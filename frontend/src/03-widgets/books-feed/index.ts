@@ -1,1 +1,0 @@
-export { BooksFeed } from "./ui";

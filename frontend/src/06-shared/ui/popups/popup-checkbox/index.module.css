@@ -1,0 +1,20 @@
+.field {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.field:hover {
+  color: var(--text-primary);
+}
+
+.checkbox {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  accent-color: hsl(0, 0%, 75%);
+  cursor: pointer;
+}

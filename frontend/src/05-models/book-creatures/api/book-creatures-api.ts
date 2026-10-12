@@ -41,7 +41,7 @@ export const updateBookCreature = async (
   id: number,
   payload: BookCreatureWriteRequest,
 ): Promise<void> => {
-  request<void>(`${BOOK_CREATURES_API_PATH}/${id}`, {
+  return request<void>(`${BOOK_CREATURES_API_PATH}/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
