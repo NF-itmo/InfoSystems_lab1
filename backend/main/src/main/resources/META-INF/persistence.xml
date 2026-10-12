@@ -11,6 +11,9 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>org.models.BookCreature</class>
+        <class>org.models.Coordinate</class>
+        <class>org.models.MagicCity</class>
+        <class>org.models.Ring</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
