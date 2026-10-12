@@ -1,14 +1,20 @@
 import { useEffect, useState } from "react";
 import {
   deleteBookCreature,
+  getBookCreature,
   removeBookCreature,
   type BookCreature,
+  type BookCreatureType,
   updateBookCreature,
   upsertBookCreature,
 } from "@/05-models/book-creatures";
 import { useErrorNotify } from "@/06-shared/lib/errorNotifier";
-import { PopupButton, PopupInput, PopupWindow } from "@/06-shared/ui/popups";
-import styles from "./index.module.css";
+import {
+  PopupButton,
+  PopupInput,
+  PopupSelect,
+  PopupWindow,
+} from "@/06-shared/ui/popups";
 
 type Props = {
   bookCreature: BookCreature | null;
@@ -17,14 +23,24 @@ type Props = {
 
 export const BookCreaturePopup = ({ bookCreature, onClose }: Props) => {
   const showError = useErrorNotify();
+  const [name, setName] = useState("");
+  const [coordinatesId, setCoordinatesId] = useState("");
   const [age, setAge] = useState("");
+  const [creatureType, setCreatureType] = useState<BookCreatureType>("HOBBIT");
+  const [creatureLocationName, setCreatureLocationName] = useState("");
   const [attackLevel, setAttackLevel] = useState("");
   const [defenseLevel, setDefenseLevel] = useState("");
+  const [ringName, setRingName] = useState("");
 
   useEffect(() => {
+    setName(bookCreature?.name ?? "");
+    setCoordinatesId(String(bookCreature?.coordinates.id ?? ""));
     setAge(String(bookCreature?.age ?? ""));
+    setCreatureType(bookCreature?.creatureType ?? "HOBBIT");
+    setCreatureLocationName(bookCreature?.creatureLocation?.name ?? "");
     setAttackLevel(String(bookCreature?.attackLevel ?? ""));
     setDefenseLevel(String(bookCreature?.defenseLevel ?? ""));
+    setRingName(bookCreature?.ring?.name ?? "");
   }, [bookCreature]);
 
   const remove = async () => {
@@ -44,12 +60,20 @@ export const BookCreaturePopup = ({ bookCreature, onClose }: Props) => {
 
     const nextBookCreature = {
       ...bookCreature,
+      name: name.trim(),
+      coordinatesId: Number(coordinatesId),
       age: Number(age),
+      creatureType,
+      creatureLocationName: creatureLocationName.trim() || undefined,
       attackLevel: Number(attackLevel),
       defenseLevel: Number(defenseLevel),
+      ringName: ringName.trim() || undefined,
     };
 
     if (
+      !nextBookCreature.name ||
+      !Number.isInteger(nextBookCreature.coordinatesId) ||
+      nextBookCreature.coordinatesId <= 0 ||
       !Number.isInteger(nextBookCreature.age) ||
       nextBookCreature.age <= 0 ||
       !Number.isInteger(nextBookCreature.attackLevel) ||
@@ -57,22 +81,22 @@ export const BookCreaturePopup = ({ bookCreature, onClose }: Props) => {
       !Number.isInteger(nextBookCreature.defenseLevel) ||
       nextBookCreature.defenseLevel <= 0
     ) {
-      showError("Возраст, атака и защита должны быть положительными целыми числами");
+      showError("Заполните имя и ID координат; числовые поля должны быть положительными целыми числами");
       return;
     }
 
     try {
       await updateBookCreature(bookCreature.id, {
-        name: bookCreature.name,
-        coordinatesId: bookCreature.coordinates.id,
+        name: nextBookCreature.name,
+        coordinatesId: nextBookCreature.coordinatesId,
         age: nextBookCreature.age,
-        creatureType: bookCreature.creatureType,
-        creatureLocationName: bookCreature.creatureLocation?.name,
+        creatureType: nextBookCreature.creatureType,
+        creatureLocationName: nextBookCreature.creatureLocationName,
         attackLevel: nextBookCreature.attackLevel,
         defenseLevel: nextBookCreature.defenseLevel,
-        ringName: bookCreature.ring?.name,
+        ringName: nextBookCreature.ringName,
       });
-      upsertBookCreature(nextBookCreature);
+      upsertBookCreature(await getBookCreature(bookCreature.id));
       onClose();
     } catch (error) {
       showError(error);
@@ -83,15 +107,31 @@ export const BookCreaturePopup = ({ bookCreature, onClose }: Props) => {
 
   return (
     <PopupWindow name={bookCreature.name} onClose={onClose}>
-      <p>Тип: {bookCreature.creatureType}</p>
-      <p>Координаты: {bookCreature.coordinates.x}, {bookCreature.coordinates.y}</p>
-      <div className={styles.description}>
-        <p>Город: {bookCreature.creatureLocation?.name ?? "не выбран"}</p>
-        <p>Кольцо: {bookCreature.ring?.name ?? "не выбрано"}</p>
-      </div>
-      <PopupInput name="Возраст" value={age} setInput={setAge} autoFocus={true}/>
+      <PopupInput name="Имя" value={name} setInput={setName} autoFocus={true}/>
+      <PopupInput name="ID координат" value={coordinatesId} setInput={setCoordinatesId}/>
+      <PopupInput name="Возраст" value={age} setInput={setAge}/>
+      <PopupSelect
+        name="Тип существа"
+        value={creatureType}
+        setValue={(value) => setCreatureType(value as BookCreatureType)}
+        options={[
+          { value: "HOBBIT", label: "HOBBIT" },
+          { value: "ELF", label: "ELF" },
+          { value: "HUMAN", label: "HUMAN" },
+        ]}
+      />
       <PopupInput name="Атака" value={attackLevel} setInput={setAttackLevel}/>
       <PopupInput name="Защита" value={defenseLevel} setInput={setDefenseLevel}/>
+      <PopupInput
+        name="Город (необязательно)"
+        value={creatureLocationName}
+        setInput={setCreatureLocationName}
+      />
+      <PopupInput
+        name="Кольцо (необязательно)"
+        value={ringName}
+        setInput={setRingName}
+      />
       <PopupButton name="Сохранить" onClick={update}/>
       <PopupButton name="Удалить" onClick={remove}/>
     </PopupWindow>

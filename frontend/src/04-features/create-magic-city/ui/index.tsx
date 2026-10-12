@@ -5,6 +5,7 @@ import { useErrorNotify } from "@/06-shared/lib/errorNotifier";
 import {
   PopupButton,
   PopupCheckbox,
+  PopupDateTimeInput,
   PopupInput,
   PopupSelect,
   PopupWindow,
@@ -18,6 +19,7 @@ export const CreateMagicCity = () => {
   const [area, setArea] = useState("");
   const [population, setPopulation] = useState("");
   const [density, setDensity] = useState("");
+  const [establishmentDate, setEstablishmentDate] = useState("");
   const [governor, setGovernor] = useState<BookCreatureType>("HOBBIT");
   const [capital, setCapital] = useState(false);
 
@@ -26,7 +28,7 @@ export const CreateMagicCity = () => {
       name: name.trim(),
       area: Number(area),
       population: Number(population),
-      establishmentDate: undefined,
+      establishmentDate: establishmentDate || undefined,
       governor,
       capital,
       populationDensity: Number(density),
@@ -55,6 +57,11 @@ export const CreateMagicCity = () => {
           <PopupInput name="Площадь" value={area} setInput={setArea}/>
           <PopupInput name="Население" value={population} setInput={setPopulation}/>
           <PopupInput name="Плотность" value={density} setInput={setDensity}/>
+          <PopupDateTimeInput
+            name="Дата основания (необязательно)"
+            value={establishmentDate}
+            setValue={setEstablishmentDate}
+          />
           <PopupSelect
             name="Правитель"
             value={governor}
