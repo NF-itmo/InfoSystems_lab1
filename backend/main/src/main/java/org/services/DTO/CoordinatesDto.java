@@ -10,6 +10,7 @@ import java.util.function.Function;
 @Getter
 @Setter
 public class CoordinatesDto {
+    private Integer id;
     private double x;
     private int y;
 
@@ -25,6 +26,7 @@ public class CoordinatesDto {
             if (value == null) return null;
 
             return new CoordinatesDto(
+                    value.getId(),
                     value.getX(),
                     value.getY()
             );
@@ -35,6 +37,7 @@ public class CoordinatesDto {
             if (value == null) return null;
 
             return Coordinate.builder()
+                    .id(value.getId())
                     .x(value.getX())
                     .y(value.getY())
                     .build();

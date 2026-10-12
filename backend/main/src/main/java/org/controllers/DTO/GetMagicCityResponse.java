@@ -1,6 +1,5 @@
 package org.controllers.DTO;
 
-import org.controllers.DTO.internal.BookCreatureType;
 import org.services.DTO.MagicCityDto;
 
 import java.time.LocalDateTime;
@@ -22,6 +21,10 @@ public record GetMagicCityResponse(
     public static final class Mapper implements Function<MagicCityDto, GetMagicCityResponse> {
         @Override
         public GetMagicCityResponse apply(MagicCityDto dto) {
+            if (dto == null) {
+                return null;
+            }
+
             return new GetMagicCityResponse(
                     dto.getName(),
                     dto.getArea(),

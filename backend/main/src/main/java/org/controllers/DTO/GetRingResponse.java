@@ -16,6 +16,10 @@ public record GetRingResponse(
     public static final class Mapper implements Function<RingDto, GetRingResponse> {
         @Override
         public GetRingResponse apply(RingDto dto) {
+            if (dto == null) {
+                return null;
+            }
+
             return new GetRingResponse(
                     dto.getName(),
                     dto.getPower(),

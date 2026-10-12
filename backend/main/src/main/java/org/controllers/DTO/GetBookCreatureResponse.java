@@ -1,26 +1,21 @@
 package org.controllers.DTO;
 
-import org.controllers.DTO.internal.BookCreatureType;
-import org.controllers.DTO.internal.CoordinatesDto;
-
 import java.time.LocalDate;
 import java.util.function.Function;
 
-import org.controllers.DTO.internal.MagicCityDto;
-import org.controllers.DTO.internal.RingDto;
 import org.services.DTO.BookCreatureDto;
 
 public record GetBookCreatureResponse(
         int id,
         String name,
-        CoordinatesDto coordinates,
+        GetCoordinatesResponse coordinates,
         LocalDate creationDate,
         int age,
         BookCreatureType creatureType,
-        MagicCityDto creatureLocation,
+        GetMagicCityResponse creatureLocation,
         Float attackLevel,
         Double defenseLevel,
-        RingDto ring
+        GetRingResponse ring
 ) {
     public static GetBookCreatureResponse fromServiceDto(BookCreatureDto serviceDto) {
         return new GetBookCreatureResponse.Mapper().apply(serviceDto);
@@ -31,14 +26,14 @@ public record GetBookCreatureResponse(
             return new GetBookCreatureResponse(
                     dto.getId(),
                     dto.getName(),
-                    CoordinatesDto.fromServiceDto(dto.getCoordinates()),
+                    GetCoordinatesResponse.fromServiceDto(dto.getCoordinates()),
                     dto.getCreationDate(),
                     dto.getAge(),
                     BookCreatureType.valueOf(dto.getCreatureType().name()),
-                    MagicCityDto.fromServiceDto(dto.getCreatureLocation()),
+                    GetMagicCityResponse.fromServiceDto(dto.getCreatureLocation()),
                     dto.getAttackLevel(),
                     dto.getDefenseLevel(),
-                    RingDto.fromServiceDto(dto.getRing())
+                    GetRingResponse.fromServiceDto(dto.getRing())
             );
         }
     }

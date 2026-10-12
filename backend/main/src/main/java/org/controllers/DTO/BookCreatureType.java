@@ -1,4 +1,4 @@
-package org.controllers.DTO.internal;
+package org.controllers.DTO;
 
 public enum BookCreatureType {
     HOBBIT,
