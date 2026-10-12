@@ -3,8 +3,11 @@ package org.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.type.PostgreSQLEnumJdbcType;
+import org.hibernate.generator.EventType;
 
 import java.time.LocalDate;
 
@@ -27,8 +30,9 @@ public class BookCreature {
     @JoinColumn(name = "coordinates_id", nullable = false)
     private Coordinate coordinates;
 
-    @NotNull
-    @Column(name = "creation_date", nullable = false)
+    @Generated(event = EventType.INSERT)
+    @ColumnDefault("CURRENT_DATE")
+    @Column(name = "creation_date", nullable = false, insertable = false, updatable = false)
     private LocalDate creationDate;
 
     @NotNull

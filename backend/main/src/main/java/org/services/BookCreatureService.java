@@ -42,9 +42,16 @@ public class BookCreatureService {
     @Transactional
     public Optional<BookCreatureDto> update(int id, BookCreatureDto dto) {
         return bookRepository.findById(id)
-                .map(existing -> BookCreatureDto.fromModel(
-                        bookRepository.update(dto.toModel())
-                ));
+                .map(existing -> {
+                    var bookCreature = dto.toModel();
+                    
+                    bookCreature.setId(existing.getId());
+                    bookCreature.setCreationDate(existing.getCreationDate());
+
+                    return BookCreatureDto.fromModel(
+                            bookRepository.update(bookCreature)
+                    );
+                });
     }
 
     @Transactional
