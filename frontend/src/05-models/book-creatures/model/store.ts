@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { getBookCreatures } from "../api/book-creatures-api";
-import type { BookCreature } from "./types";
+import type { BookCreature, BookCreatureFilters } from "./types";
 
 let bookCreatures: BookCreature[] = [];
 let initialization: Promise<void> | null = null;
@@ -22,13 +22,18 @@ const getSnapshot = () => bookCreatures;
 
 export const useBookCreatures = () => useSyncExternalStore(subscribe, getSnapshot);
 
+export const loadBookCreatures = async (
+  filters: BookCreatureFilters = {},
+): Promise<void> => {
+  const loadedBookCreatures = await getBookCreatures(filters);
+
+  bookCreatures = loadedBookCreatures;
+  notify();
+};
+
 export const initializeBookCreatures = (): Promise<void> => {
   if (!initialization) {
-    initialization = getBookCreatures()
-      .then((loadedBookCreatures) => {
-        bookCreatures = loadedBookCreatures;
-        notify();
-      })
+    initialization = loadBookCreatures()
       .catch((error) => {
         initialization = null;
         throw error;

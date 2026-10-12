@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { createNotifier } from "@/06-shared/lib/notifier";
 import { ErrorPopup } from "@/06-shared/ui/errorPopup";
 
@@ -37,10 +38,11 @@ export const {
 export const useErrorNotify = () => {
   const { showNotification } = useErrorNotification();
 
-  return (error: unknown) => {
-    const message = extractErrorMessage(error);
-    if (message) {
-      showNotification(message);
-    }
-  };
+  return useCallback((error: unknown) => {
+      const message = extractErrorMessage(error);
+      if (message) {
+        showNotification(message);
+      }
+    }, [showNotification]
+  );
 };

@@ -8,6 +8,7 @@ export {
 
 export {
   initializeBookCreatures,
+  loadBookCreatures,
   removeBookCreature,
   upsertBookCreature,
   useBookCreatures,
