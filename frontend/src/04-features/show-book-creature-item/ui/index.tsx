@@ -12,7 +12,7 @@ export const ShowBookCreatureItem = ({ book, onClick }: Props) => {
       <p className={styles.bookTitle}>
         #{book.id} - {book.name}
       </p >
-      <p className={styles.type}>{book.creatureType} · возраст {book.age}</p>
+      <p className={styles.type}>{book.creatureType} | возраст {book.age}</p>
       <div className={styles.stats}>
         <span>Атака: {book.attackLevel}</span>
         <span>Защита: {book.defenseLevel}</span>

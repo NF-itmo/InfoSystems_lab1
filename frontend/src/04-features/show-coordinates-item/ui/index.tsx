@@ -10,7 +10,7 @@ export const ShowCoordinatesItem = ({ coordinates, onClick }: Props) => {
   return (
     <button className={styles.item} onClick={onClick}>
       <p className={styles.title}>Координаты #{coordinates.id}</p>
-      <p className={styles.description}>X: {coordinates.x} · Y: {coordinates.y}</p>
+      <p className={styles.description}>X: {coordinates.x} | Y: {coordinates.y}</p>
     </button>
   );
 };

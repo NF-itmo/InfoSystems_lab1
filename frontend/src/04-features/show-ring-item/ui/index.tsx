@@ -10,7 +10,7 @@ export const ShowRingItem = ({ ring, onClick }: Props) => {
   return (
     <button className={styles.item} onClick={onClick}>
       <p className={styles.title}>{ring.name}</p>
-      <p className={styles.description}>Сила: {ring.power} · Вес: {ring.weight}</p>
+      <p className={styles.description}>Сила: {ring.power} | Вес: {ring.weight}</p>
     </button>
   );
 };

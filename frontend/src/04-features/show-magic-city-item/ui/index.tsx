@@ -11,7 +11,7 @@ export const ShowMagicCityItem = ({ city, onClick }: Props) => {
     <button className={styles.item} onClick={onClick}>
       <p className={styles.title}>{city.name}</p>
       <p className={styles.description}>
-        Население: {city.population} · {city.capital ? "столица" : "город"}
+        Население: {city.population} | {city.capital ? "столица" : "город"}
       </p>
     </button>
   );
