@@ -1,8 +1,12 @@
-package org.controllers.DTO;
+package org.controllers.DTO.bookCreature;
 
 import java.time.LocalDate;
 import java.util.function.Function;
 
+import org.controllers.DTO.BookCreatureType;
+import org.controllers.DTO.coordinates.GetCoordinatesResponse;
+import org.controllers.DTO.magicCity.GetMagicCityResponse;
+import org.controllers.DTO.ring.GetRingResponse;
 import org.services.DTO.BookCreatureDto;
 
 public record GetBookCreatureResponse(

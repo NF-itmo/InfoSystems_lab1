@@ -1,8 +1,9 @@
-package org.controllers.DTO;
+package org.controllers.DTO.magicCity;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import org.controllers.DTO.BookCreatureType;
 import org.services.DTO.MagicCityDto;
 
 import java.time.LocalDateTime;

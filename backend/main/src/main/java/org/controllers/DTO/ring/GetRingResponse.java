@@ -1,4 +1,4 @@
-package org.controllers.DTO;
+package org.controllers.DTO.ring;
 
 import org.services.DTO.RingDto;
 

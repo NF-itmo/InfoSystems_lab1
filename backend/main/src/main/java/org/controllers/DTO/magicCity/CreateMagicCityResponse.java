@@ -1,4 +1,4 @@
-package org.controllers.DTO;
+package org.controllers.DTO.magicCity;
 
 public record CreateMagicCityResponse(
         String name

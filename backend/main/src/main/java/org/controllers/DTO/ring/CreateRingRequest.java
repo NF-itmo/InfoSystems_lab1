@@ -1,4 +1,4 @@
-package org.controllers.DTO;
+package org.controllers.DTO.ring;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,7 +7,7 @@ import org.services.DTO.RingDto;
 
 import java.util.function.Function;
 
-public record UpdateRingRequest(
+public record CreateRingRequest(
         @NotBlank String name,
         @Positive int power,
         @NotNull @Positive Long weight
@@ -16,9 +16,9 @@ public record UpdateRingRequest(
         return new Mapper().apply(this);
     }
 
-    public static final class Mapper implements Function<UpdateRingRequest, RingDto> {
+    public static final class Mapper implements Function<CreateRingRequest, RingDto> {
         @Override
-        public RingDto apply(UpdateRingRequest request) {
+        public RingDto apply(CreateRingRequest request) {
             return new RingDto(
                     request.name(),
                     request.power(),

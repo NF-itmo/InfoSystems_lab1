@@ -14,10 +14,10 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.controllers.DTO.CreateMagicCityRequest;
-import org.controllers.DTO.CreateMagicCityResponse;
-import org.controllers.DTO.GetMagicCityResponse;
-import org.controllers.DTO.UpdateMagicCityRequest;
+import org.controllers.DTO.magicCity.CreateMagicCityRequest;
+import org.controllers.DTO.magicCity.CreateMagicCityResponse;
+import org.controllers.DTO.magicCity.GetMagicCityResponse;
+import org.controllers.DTO.magicCity.UpdateMagicCityRequest;
 import org.services.MagicCityService;
 
 import java.util.List;

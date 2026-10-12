@@ -14,10 +14,10 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.controllers.DTO.CreateRingRequest;
-import org.controllers.DTO.CreateRingResponse;
-import org.controllers.DTO.GetRingResponse;
-import org.controllers.DTO.UpdateRingRequest;
+import org.controllers.DTO.ring.CreateRingRequest;
+import org.controllers.DTO.ring.CreateRingResponse;
+import org.controllers.DTO.ring.GetRingResponse;
+import org.controllers.DTO.ring.UpdateRingRequest;
 import org.services.RingService;
 
 import java.util.List;

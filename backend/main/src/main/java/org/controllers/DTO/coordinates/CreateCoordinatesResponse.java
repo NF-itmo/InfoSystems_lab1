@@ -1,4 +1,4 @@
-package org.controllers.DTO;
+package org.controllers.DTO.coordinates;
 
 import org.services.DTO.CoordinatesDto;
 

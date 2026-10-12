@@ -16,7 +16,10 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.controllers.DTO.*;
+import org.controllers.DTO.bookCreature.CreateBookCreatureRequest;
+import org.controllers.DTO.bookCreature.CreateBookCreatureResponse;
+import org.controllers.DTO.bookCreature.GetBookCreatureResponse;
+import org.controllers.DTO.bookCreature.UpdateBookCreatureRequest;
 import org.services.BookCreatureService;
 
 import java.util.List;

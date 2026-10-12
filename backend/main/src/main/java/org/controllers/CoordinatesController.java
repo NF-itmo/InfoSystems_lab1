@@ -14,10 +14,10 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.controllers.DTO.CreateCoordinatesRequest;
-import org.controllers.DTO.CreateCoordinatesResponse;
-import org.controllers.DTO.GetCoordinatesResponse;
-import org.controllers.DTO.UpdateCoordinatesRequest;
+import org.controllers.DTO.coordinates.CreateCoordinatesRequest;
+import org.controllers.DTO.coordinates.CreateCoordinatesResponse;
+import org.controllers.DTO.coordinates.GetCoordinatesResponse;
+import org.controllers.DTO.coordinates.UpdateCoordinatesRequest;
 import org.services.CoordinatesService;
 
 import java.util.List;

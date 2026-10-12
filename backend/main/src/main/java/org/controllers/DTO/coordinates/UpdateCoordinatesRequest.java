@@ -1,11 +1,11 @@
-package org.controllers.DTO;
+package org.controllers.DTO.coordinates;
 
 import jakarta.validation.constraints.DecimalMin;
 import org.services.DTO.CoordinatesDto;
 
 import java.util.function.Function;
 
-public record CreateCoordinatesRequest(
+public record UpdateCoordinatesRequest(
         @DecimalMin(value = "-126", inclusive = false) double x,
         int y
 ) {
@@ -13,9 +13,9 @@ public record CreateCoordinatesRequest(
         return new Mapper().apply(this);
     }
 
-    public static final class Mapper implements Function<CreateCoordinatesRequest, CoordinatesDto> {
+    public static final class Mapper implements Function<UpdateCoordinatesRequest, CoordinatesDto> {
         @Override
-        public CoordinatesDto apply(CreateCoordinatesRequest request) {
+        public CoordinatesDto apply(UpdateCoordinatesRequest request) {
             return new CoordinatesDto(null, request.x(), request.y());
         }
     }
