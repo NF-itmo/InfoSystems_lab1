@@ -1,14 +1,57 @@
 package org.services;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.data.Limit;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import org.repository.BookCreatureRepository;
 import org.services.DTO.BookCreatureDto;
 import org.services.DTO.PageDto;
 
+import java.util.List;
 import java.util.Optional;
 
-public abstract class BookCreatureService {
-    public abstract BookCreatureDto create(BookCreatureDto bookCreature);
-    public abstract Optional<BookCreatureDto> findById(int id);
-    public abstract PageDto<BookCreatureDto> findAll(int page, int size, String nameFilter, String sort);
-    public abstract Optional<BookCreatureDto> update(int id, BookCreatureDto bookCreature);
-    public abstract boolean delete(int id);
+@ApplicationScoped
+public class BookCreatureService {
+    @Inject private BookCreatureRepository bookRepository;
+
+    @Transactional
+    public BookCreatureDto create(BookCreatureDto dto) {
+        return BookCreatureDto.fromModel(
+                bookRepository.insert(dto.toModel())
+        );
+    }
+
+    public Optional<BookCreatureDto> findById(int id) {
+        return bookRepository.findById(id)
+                .map(BookCreatureDto::fromModel);
+    }
+
+    public PageDto<BookCreatureDto> findAll(int page, int size, String nameFilter) {
+        String pattern = nameFilter == null ? "" : nameFilter;
+        long first = (long) page * size + 1;
+        Limit limit = Limit.range(first, first + size - 1L);
+
+        List<BookCreatureDto> items = bookRepository.findByNamePattern(pattern, limit).stream()
+                .map(BookCreatureDto::fromModel)
+                .toList();
+
+        return new PageDto<>(items, page, size, bookRepository.countByNamePattern(pattern));
+    }
+
+    @Transactional
+    public Optional<BookCreatureDto> update(int id, BookCreatureDto dto) {
+        return bookRepository.findById(id)
+                .map(existing -> BookCreatureDto.fromModel(
+                        bookRepository.update(dto.toModel())
+                ));
+    }
+
+    @Transactional
+    public boolean delete(int id) {
+        if (bookRepository.findById(id).isEmpty()) return false;
+        
+        bookRepository.deleteById(id);
+        return true;
+    }
 }

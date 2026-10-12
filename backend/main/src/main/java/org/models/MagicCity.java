@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -26,12 +26,12 @@ public class MagicCity {
     private Integer population;
 
     @Column(name = "establishment_date")
-    private Instant establishmentDate;
+    private LocalDateTime establishmentDate;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "governor", nullable = false, columnDefinition = "BookCreatureType not null")
-    private BookCreatureType creatureType;
+    private BookCreatureType governor;
 
     @NotNull
     @Column(name = "capital", nullable = false)

@@ -25,7 +25,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class BookCreatureController {
-    private BookCreatureService bookCreatureService;
+    @Inject private BookCreatureService bookCreatureService;
 
     @POST
     public CreateBookCreatureResponse create(@Valid CreateBookCreatureRequest request) {
@@ -40,10 +40,9 @@ public class BookCreatureController {
     public List<GetBookCreatureResponse> findAll(
             @QueryParam("page") @DefaultValue("0") @Min(0) int page,
             @QueryParam("size") @DefaultValue("20") @Min(1) @Max(100) int size,
-            @QueryParam("name") String name,
-            @QueryParam("sort") @DefaultValue("id") String sort
+            @QueryParam("name") String name
     ) {
-        return bookCreatureService.findAll(page, size, name, sort)
+        return bookCreatureService.findAll(page, size, name)
                 .getItems().stream()
                 .map(GetBookCreatureResponse::fromServiceDto)
                 .toList();

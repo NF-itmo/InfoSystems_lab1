@@ -1,25 +1,23 @@
 package org.controllers.DTO;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.controllers.DTO.internal.BookCreatureType;
-import org.controllers.DTO.internal.CoordinatesDto;
-import org.controllers.DTO.internal.MagicCityDto;
-import org.controllers.DTO.internal.RingDto;
 import org.services.DTO.BookCreatureDto;
+import org.services.DTO.CoordinatesDto;
+
 import java.util.function.Function;
 
 public record CreateBookCreatureRequest(
         @NotBlank String name,
-        @NotNull @Valid CoordinatesDto coordinates,
+        @NotNull @Positive Integer coordinatesId,
         @Positive int age,
         @NotNull BookCreatureType creatureType,
-        @Valid MagicCityDto creatureLocation,
+        String creatureLocationName,
         @NotNull @Positive Float attackLevel,
         @NotNull @Positive Double defenseLevel,
-        @Valid RingDto ring
+        String ringName
 ) {
     public BookCreatureDto toServiceDto() {
         return new Mapper().apply(this);
@@ -29,13 +27,13 @@ public record CreateBookCreatureRequest(
         @Override public BookCreatureDto apply(CreateBookCreatureRequest request) {
             return BookCreatureDto.builder()
                     .name(request.name())
-                    .coordinates(CoordinatesDto.toServiceDto(request.coordinates()))
+                    .coordinates(new CoordinatesDto().request.coordinatesId())
                     .age(request.age())
                     .creatureType(org.services.DTO.BookCreatureType.valueOf(request.creatureType().name()))
-                    .creatureLocation(MagicCityDto.toServiceDto(request.creatureLocation()))
+                    .creatureLocationName(request.creatureLocationName())
                     .attackLevel(request.attackLevel())
                     .defenseLevel(request.defenseLevel())
-                    .ring(RingDto.toServiceDto(request.ring()))
+                    .ringName(request.ringName())
                     .build();
         }
     }
