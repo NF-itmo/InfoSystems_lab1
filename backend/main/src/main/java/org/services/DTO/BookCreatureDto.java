@@ -62,10 +62,14 @@ public class BookCreatureDto {
                     value.getCreationDate(),
                     value.getAge(),
                     org.models.BookCreatureType.valueOf(value.getCreatureType().name()),
-                    value.getCreatureLocation().toModel(),
+                    value.getCreatureLocation() == null
+                            ? null
+                            : value.getCreatureLocation().toModel(),
                     value.getAttackLevel(),
                     value.getDefenseLevel(),
-                    value.getRing().toModel()
+                    value.getRing() == null
+                            ? null
+                            : value.getRing().toModel()
             );
         }
     }
