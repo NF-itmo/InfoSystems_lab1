@@ -7,11 +7,24 @@ import jakarta.data.repository.Repository;
 import org.models.BookCreature;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BookCreatureRepository extends CrudRepository<BookCreature, Integer> {
     @Query("""
             SELECT creature FROM BookCreature creature
+            JOIN FETCH creature.coordinates
+            LEFT JOIN FETCH creature.creatureLocationName
+            LEFT JOIN FETCH creature.ringName
+            WHERE creature.id = ?1
+            """)
+    Optional<BookCreature> findDetailedById(int id);
+
+    @Query("""
+            SELECT creature FROM BookCreature creature
+            JOIN FETCH creature.coordinates
+            LEFT JOIN FETCH creature.creatureLocationName
+            LEFT JOIN FETCH creature.ringName
             WHERE LOWER(creature.name) LIKE CONCAT('%', LOWER(?1), '%')
             ORDER BY creature.id
             """)

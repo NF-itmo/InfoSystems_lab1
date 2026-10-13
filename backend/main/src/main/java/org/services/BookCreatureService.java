@@ -24,7 +24,7 @@ public class BookCreatureService {
 
     @Transactional
     public Optional<BookCreatureDto> findById(int id) {
-        return bookRepository.findById(id)
+        return bookRepository.findDetailedById(id)
                 .map(BookCreatureDto::fromModel);
     }
 
