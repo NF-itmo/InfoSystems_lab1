@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  createBookCreature,
-  getBookCreature,
-  type BookCreatureType,
-  upsertBookCreature,
-} from "@/05-models/book-creatures";
+import { createBookCreature,type BookCreatureType } from "@/05-models/book-creatures";
 import { useErrorNotify } from "@/06-shared/lib/errorNotifier";
 import {
   PopupButton,
@@ -14,7 +9,11 @@ import {
 } from "@/06-shared/ui/popups";
 import styles from "./index.module.css";
 
-export const CreateBookCreature = () => {
+type Props = {
+  onCreated: () => Promise<void>;
+};
+
+export const CreateBookCreature = ({ onCreated }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   
   const [name, setName] = useState("");
@@ -61,7 +60,7 @@ export const CreateBookCreature = () => {
     }
 
     try {
-      const { id } = await createBookCreature({
+      await createBookCreature({
         name: name.trim(),
         coordinatesId: parsedCoordinatesId,
         age: parsedAge,
@@ -71,7 +70,8 @@ export const CreateBookCreature = () => {
         defenseLevel: parsedDefenseLevel,
         ringName: ringName.trim() || undefined,
       });
-      upsertBookCreature(await getBookCreature(id));
+
+      await onCreated();
       reset();
       setIsOpen(false);
     } catch (error) {

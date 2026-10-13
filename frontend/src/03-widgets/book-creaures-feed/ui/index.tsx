@@ -23,17 +23,25 @@ export const BookCreaturesFeed = () => {
   const [searchValue, setSearchValue] = useState("");
   const showError = useErrorNotify();
 
-  useEffect(() => {
+  const reloadBooks = useCallback(async () => {
     setIsLoading(true);
 
-    loadBookCreatures({
-      page,
-      size: PAGE_SIZE,
-      name: searchValue || undefined,
-    })
-      .catch(showError)
-      .finally(() => setIsLoading(false));
+    try {
+      await loadBookCreatures({
+        page,
+        size: PAGE_SIZE,
+        name: searchValue || undefined,
+      });
+    } catch (error) {
+      showError(error);
+    } finally {
+      setIsLoading(false);
+    }
   }, [page, searchValue, showError]);
+
+  useEffect(() => {
+    void reloadBooks();
+  }, [reloadBooks]);
 
   const search = useCallback((name: string) => {
     setPage(0);
@@ -60,7 +68,7 @@ export const BookCreaturesFeed = () => {
     <section className={styles.feed}>
       <div className={styles.header}>
         <h1 className={styles.title}>Существа книги</h1>
-        <CreateBookCreature/>
+        <CreateBookCreature onCreated={reloadBooks}/>
       </div>
 
       <SearchBookCreatures onSearch={search}/>
