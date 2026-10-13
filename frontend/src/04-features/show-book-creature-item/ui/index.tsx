@@ -20,10 +20,12 @@ export const ShowBookCreatureItem = ({ book, onClick }: Props) => {
       <p className={styles.coordinates}>
         Координаты: {book.coordinates.x}, {book.coordinates.y}
       </p>
-      <div className={styles.bookFooter}>
-        <span>{book.creatureLocation?.name ?? "Без города"}</span>
-        <span>{book.ring?.name ?? "Без кольца"}</span>
-      </div>
+      <p className={styles.coordinates}>
+        Город: {book.creatureLocation?.name ?? "Не указан"}
+      </p>
+      <p className={styles.coordinates}>
+        Кольцо: {book.ring?.name ?? "Не указано"}
+      </p>
     </button>
   );
 };
