@@ -3,6 +3,7 @@ package org.services;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import org.events.DataChangePublisher;
 import org.repository.CoordinateRepository;
 import org.services.DTO.CoordinatesDto;
 
@@ -12,12 +13,15 @@ import java.util.Optional;
 @ApplicationScoped
 public class CoordinatesService {
     @Inject private CoordinateRepository coordinateRepository;
+    @Inject private DataChangePublisher dataChangePublisher;
 
     @Transactional
     public CoordinatesDto create(CoordinatesDto dto) {
-        return CoordinatesDto.fromModel(
+        CoordinatesDto createdCoordinates = CoordinatesDto.fromModel(
                 coordinateRepository.insert(dto.toModel())
         );
+        dataChangePublisher.publish();
+        return createdCoordinates;
     }
 
     public List<CoordinatesDto> findAll() {
@@ -36,9 +40,11 @@ public class CoordinatesService {
         return coordinateRepository.findById(id)
                 .map(existing -> {
                     dto.setId(id);
-                    return CoordinatesDto.fromModel(
+                    CoordinatesDto updatedCoordinates = CoordinatesDto.fromModel(
                             coordinateRepository.update(dto.toModel())
                     );
+                    dataChangePublisher.publish();
+                    return updatedCoordinates;
                 });
     }
 
@@ -49,6 +55,7 @@ public class CoordinatesService {
         }
 
         coordinateRepository.deleteById(id);
+        dataChangePublisher.publish();
         return true;
     }
 }

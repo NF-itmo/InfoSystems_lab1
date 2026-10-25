@@ -3,6 +3,7 @@ package org.services;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import org.events.DataChangePublisher;
 import org.repository.RingRepository;
 import org.services.DTO.RingDto;
 
@@ -12,12 +13,15 @@ import java.util.Optional;
 @ApplicationScoped
 public class RingService {
     @Inject private RingRepository ringRepository;
+    @Inject private DataChangePublisher dataChangePublisher;
 
     @Transactional
     public RingDto create(RingDto dto) {
-        return RingDto.fromModel(
+        RingDto createdRing = RingDto.fromModel(
                 ringRepository.insert(dto.toModel())
         );
+        dataChangePublisher.publish();
+        return createdRing;
     }
 
     public List<RingDto> findAll() {
@@ -36,9 +40,11 @@ public class RingService {
         return ringRepository.findById(name)
                 .map(existing -> {
                     dto.setName(name);
-                    return RingDto.fromModel(
+                    RingDto updatedRing = RingDto.fromModel(
                             ringRepository.update(dto.toModel())
                     );
+                    dataChangePublisher.publish();
+                    return updatedRing;
                 });
     }
 
@@ -49,6 +55,7 @@ public class RingService {
         }
 
         ringRepository.deleteById(name);
+        dataChangePublisher.publish();
         return true;
     }
 }

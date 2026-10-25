@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
-  initializeCoordinates,
+  loadCoordinates,
   useCoordinates,
   type Coordinates
 } from "@/05-models/coordinates";
@@ -8,6 +8,7 @@ import { CreateCoordinates } from "@/04-features/create-coordinates";
 import { CoordinatesPopup } from "@/04-features/coordinates-popup";
 import styles from "./index.module.css";
 import { useErrorNotify } from "@/06-shared/lib/errorNotifier";
+import { useDataUpdateVersion } from "@/06-shared/lib/data-updates";
 import { DataTable, type DataTableColumn } from "@/06-shared/ui/data-table";
 
 const columns: DataTableColumn<Coordinates>[] = [
@@ -21,12 +22,23 @@ export const CoordinatesFeed = () => {
   const [selected, setSelected] = useState<Coordinates | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const showError = useErrorNotify();
+  const dataUpdateVersion = useDataUpdateVersion();
+
+  const reloadCoordinates = useCallback(async () => {
+    setIsLoading(true);
+
+    try {
+      await loadCoordinates();
+    } catch (error) {
+      showError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [showError]);
 
   useEffect(() => {
-    initializeCoordinates()
-      .catch(showError)
-      .finally(() => setIsLoading(false));
-  }, []);
+    void reloadCoordinates();
+  }, [dataUpdateVersion, reloadCoordinates]);
 
   return (
     <section className={styles.feed}>

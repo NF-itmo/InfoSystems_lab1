@@ -3,7 +3,7 @@ import {BuildOptions} from "./types/types";
 
 export function buildDevServer(options: BuildOptions): DevServerConfiguration {
     const backendTarget = process.env.BACKEND_PROXY_TARGET || 'http://localhost:8080';
-    const backendRoot = "/api"
+    const backendRoots = ["/api", "/updates"];
 
     return {
         allowedHosts: 'all',
@@ -20,10 +20,11 @@ export function buildDevServer(options: BuildOptions): DevServerConfiguration {
         hot: true,
         proxy: [
             {
-                context: backendRoot,
+                context: backendRoots,
                 target: backendTarget,
                 changeOrigin: true,
                 secure: false,
+                ws: true,
             },
         ],
     }

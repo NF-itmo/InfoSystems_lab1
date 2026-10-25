@@ -4,6 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.data.Limit;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import org.events.DataChangePublisher;
 import org.repository.BookCreatureRepository;
 import org.models.BookCreatureType;
 import org.services.DTO.BookCreatureDto;
@@ -15,12 +16,15 @@ import java.util.Optional;
 @ApplicationScoped
 public class BookCreatureService {
     @Inject private BookCreatureRepository bookRepository;
+    @Inject private DataChangePublisher dataChangePublisher;
 
     @Transactional
     public BookCreatureDto create(BookCreatureDto dto) {
-        return BookCreatureDto.fromModel(
+        BookCreatureDto createdBookCreature = BookCreatureDto.fromModel(
                 bookRepository.insert(dto.toModel())
         );
+        dataChangePublisher.publish();
+        return createdBookCreature;
     }
 
     @Transactional
@@ -61,7 +65,13 @@ public class BookCreatureService {
 
     @Transactional
     public long removeRingsFromHobbits() {
-        return bookRepository.removeRingsByCreatureType(BookCreatureType.HOBBIT);
+        long affectedCount = bookRepository.removeRingsByCreatureType(BookCreatureType.HOBBIT);
+
+        if (affectedCount > 0) {
+            dataChangePublisher.publish();
+        }
+
+        return affectedCount;
     }
 
     @Transactional
@@ -80,9 +90,11 @@ public class BookCreatureService {
                     bookCreature.setId(existing.getId());
                     bookCreature.setCreationDate(existing.getCreationDate());
 
-                    return BookCreatureDto.fromModel(
+                    BookCreatureDto updatedBookCreature = BookCreatureDto.fromModel(
                             bookRepository.update(bookCreature)
                     );
+                    dataChangePublisher.publish();
+                    return updatedBookCreature;
                 });
     }
 
@@ -91,6 +103,7 @@ public class BookCreatureService {
         if (bookRepository.findById(id).isEmpty()) return false;
         
         bookRepository.deleteById(id);
+        dataChangePublisher.publish();
         return true;
     }
 }

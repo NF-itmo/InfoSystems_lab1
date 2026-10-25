@@ -14,13 +14,14 @@ const subscribe = (listener: () => void) => {
 
 export const useCoordinates = () => useSyncExternalStore(subscribe, () => coordinates);
 
+export const loadCoordinates = async (): Promise<void> => {
+  coordinates = await getCoordinatesList();
+  notify();
+};
+
 export const initializeCoordinates = (): Promise<void> => {
   if (!initialization) {
-    initialization = getCoordinatesList()
-      .then((loadedCoordinates) => {
-        coordinates = loadedCoordinates;
-        notify();
-      })
+    initialization = loadCoordinates()
       .catch((error) => {
         initialization = null;
         throw error;

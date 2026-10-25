@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import { initializeRings, useRings, type Ring } from "@/05-models/ring";
+import { useCallback, useEffect, useState } from "react";
+import { loadRings, useRings, type Ring } from "@/05-models/ring";
 import { CreateRing } from "@/04-features/create-ring";
 import { RingPopup } from "@/04-features/ring-popup";
 import { useErrorNotify } from "@/06-shared/lib/errorNotifier";
+import { useDataUpdateVersion } from "@/06-shared/lib/data-updates";
 import { DataTable, type DataTableColumn } from "@/06-shared/ui/data-table";
 import styles from "./index.module.css";
 
@@ -17,12 +18,23 @@ export const RingsFeed = () => {
   const [selected, setSelected] = useState<Ring | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const showError = useErrorNotify();
+  const dataUpdateVersion = useDataUpdateVersion();
+
+  const reloadRings = useCallback(async () => {
+    setIsLoading(true);
+
+    try {
+      await loadRings();
+    } catch (error) {
+      showError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [showError]);
 
   useEffect(() => {
-    initializeRings()
-      .catch(showError)
-      .finally(() => setIsLoading(false));
-  }, []);
+    void reloadRings();
+  }, [dataUpdateVersion, reloadRings]);
 
   return (
     <section className={styles.feed}>

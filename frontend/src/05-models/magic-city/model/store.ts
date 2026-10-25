@@ -14,13 +14,14 @@ const subscribe = (listener: () => void) => {
 
 export const useMagicCities = () => useSyncExternalStore(subscribe, () => magicCities);
 
+export const loadMagicCities = async (): Promise<void> => {
+  magicCities = await getMagicCities();
+  notify();
+};
+
 export const initializeMagicCities = (): Promise<void> => {
   if (!initialization) {
-    initialization = getMagicCities()
-      .then((loadedMagicCities) => {
-        magicCities = loadedMagicCities;
-        notify();
-      })
+    initialization = loadMagicCities()
       .catch((error) => {
         initialization = null;
         throw error;

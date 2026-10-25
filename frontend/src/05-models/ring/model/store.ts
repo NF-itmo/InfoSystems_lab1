@@ -14,13 +14,14 @@ const subscribe = (listener: () => void) => {
 
 export const useRings = () => useSyncExternalStore(subscribe, () => rings);
 
+export const loadRings = async (): Promise<void> => {
+  rings = await getRings();
+  notify();
+};
+
 export const initializeRings = (): Promise<void> => {
   if (!initialization) {
-    initialization = getRings()
-      .then((loadedRings) => {
-        rings = loadedRings;
-        notify();
-      })
+    initialization = loadRings()
       .catch((error) => {
         initialization = null;
         throw error;

@@ -6,6 +6,7 @@ import {
   type BookCreature,
 } from "@/05-models/book-creatures";
 import { useErrorNotify } from "@/06-shared/lib/errorNotifier";
+import { useDataUpdateVersion } from "@/06-shared/lib/data-updates";
 import {
   DataTable,
   type DataTableColumn,
@@ -59,6 +60,7 @@ export const BookCreaturesFeed = () => {
   const [page, setPage] = useState(0);
   const [searchValue, setSearchValue] = useState("");
   const showError = useErrorNotify();
+  const dataUpdateVersion = useDataUpdateVersion();
 
   const reloadBooks = useCallback(async () => {
     setIsLoading(true);
@@ -78,7 +80,7 @@ export const BookCreaturesFeed = () => {
 
   useEffect(() => {
     void reloadBooks();
-  }, [reloadBooks]);
+  }, [dataUpdateVersion, reloadBooks]);
 
   const search = useCallback((name: string) => {
     setPage(0);

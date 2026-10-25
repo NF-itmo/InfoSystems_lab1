@@ -7,6 +7,7 @@ export {
 } from "./api/coordinates-api";
 export {
   initializeCoordinates,
+  loadCoordinates,
   removeCoordinates,
   upsertCoordinates,
   useCoordinates,

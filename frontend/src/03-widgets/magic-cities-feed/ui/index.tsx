@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import { initializeMagicCities, useMagicCities, type MagicCity } from "@/05-models/magic-city";
+import { useCallback, useEffect, useState } from "react";
+import { loadMagicCities, useMagicCities, type MagicCity } from "@/05-models/magic-city";
 import { CreateMagicCity } from "@/04-features/create-magic-city";
 import { MagicCityPopup } from "@/04-features/magic-city-popup";
 import { useErrorNotify } from "@/06-shared/lib/errorNotifier";
+import { useDataUpdateVersion } from "@/06-shared/lib/data-updates";
 import { DataTable, type DataTableColumn } from "@/06-shared/ui/data-table";
 import styles from "./index.module.css";
 
@@ -33,12 +34,23 @@ export const MagicCitiesFeed = () => {
   const [selected, setSelected] = useState<MagicCity | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const showError = useErrorNotify();
+  const dataUpdateVersion = useDataUpdateVersion();
+
+  const reloadMagicCities = useCallback(async () => {
+    setIsLoading(true);
+
+    try {
+      await loadMagicCities();
+    } catch (error) {
+      showError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [showError]);
 
   useEffect(() => {
-    initializeMagicCities()
-      .catch(showError)
-      .finally(() => setIsLoading(false));
-  }, []);
+    void reloadMagicCities();
+  }, [dataUpdateVersion, reloadMagicCities]);
 
   return (
     <section className={styles.feed}>

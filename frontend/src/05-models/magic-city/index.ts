@@ -7,6 +7,7 @@ export {
 } from "./api/magic-city-api";
 export {
   initializeMagicCities,
+  loadMagicCities,
   removeMagicCity,
   upsertMagicCity,
   useMagicCities,
