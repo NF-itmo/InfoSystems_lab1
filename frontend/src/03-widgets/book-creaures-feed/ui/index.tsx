@@ -6,14 +6,46 @@ import {
   type BookCreature,
 } from "@/05-models/book-creatures";
 import { useErrorNotify } from "@/06-shared/lib/errorNotifier";
+import {
+  DataTable,
+  type DataTableColumn,
+} from "@/06-shared/ui/data-table";
 import { Pagination } from "@/06-shared/ui/pagination";
 import { BookCreaturePopup } from "@/04-features/book-creature-popup";
 import { CreateBookCreature } from "@/04-features/create-book-creature";
 import { SearchBookCreatures } from "@/04-features/search-book-creatures";
-import { ShowBookCreatureItem } from "@/04-features/show-book-creature-item";
 import styles from "./index.module.css";
 
 const PAGE_SIZE = 5;
+
+const columns: DataTableColumn<BookCreature>[] = [
+  { key: "id", title: "ID", render: (book) => book.id },
+  { key: "name", title: "Название", render: (book) => book.name },
+  {
+    key: "coordinates",
+    title: "Координаты",
+    render: (book) => `${book.coordinates.x}, ${book.coordinates.y}`,
+  },
+  { key: "age", title: "Возраст", render: (book) => book.age },
+  { key: "type", title: "Тип", render: (book) => book.creatureType },
+  {
+    key: "city",
+    title: "Город",
+    render: (book) => book.creatureLocation?.name ?? "-",
+  },
+  { key: "attack", title: "Атака", render: (book) => book.attackLevel },
+  { key: "defense", title: "Защита", render: (book) => book.defenseLevel },
+  {
+    key: "ring",
+    title: "Кольцо",
+    render: (book) => book.ring?.name ?? "-",
+  },
+  {
+    key: "creationDate",
+    title: "Дата создания",
+    render: (book) => book.creationDate,
+  },
+];
 
 export const BookCreaturesFeed = () => {
   const books = useBookCreatures();
@@ -80,13 +112,14 @@ export const BookCreaturesFeed = () => {
         {!isLoading && books.length === 0 && (
           <p className={styles.message}>Существа не найдены</p>
         )}
-        {!isLoading && books.map((book) => (
-          <ShowBookCreatureItem
-            key={book.id}
-            book={book}
-            onClick={() => showBookDetails(book.id)}
+        {!isLoading && books.length > 0 && (
+          <DataTable
+            items={books}
+            columns={columns}
+            getRowKey={(book) => book.id}
+            onRowClick={(book) => showBookDetails(book.id)}
           />
-        ))}
+        )}
       </div>
 
       {!isLoading && (

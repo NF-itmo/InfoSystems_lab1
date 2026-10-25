@@ -2,13 +2,19 @@ import { useEffect, useState } from "react";
 import {
   initializeCoordinates,
   useCoordinates,
-  type Coordinates,
+  type Coordinates
 } from "@/05-models/coordinates";
 import { CreateCoordinates } from "@/04-features/create-coordinates";
-import { ShowCoordinatesItem } from "@/04-features/show-coordinates-item";
 import { CoordinatesPopup } from "@/04-features/coordinates-popup";
 import styles from "./index.module.css";
 import { useErrorNotify } from "@/06-shared/lib/errorNotifier";
+import { DataTable, type DataTableColumn } from "@/06-shared/ui/data-table";
+
+const columns: DataTableColumn<Coordinates>[] = [
+  { key: "id", title: "ID", render: (coordinates) => coordinates.id },
+  { key: "x", title: "X", render: (coordinates) => coordinates.x },
+  { key: "y", title: "Y", render: (coordinates) => coordinates.y },
+];
 
 export const CoordinatesFeed = () => {
   const items = useCoordinates();
@@ -36,13 +42,14 @@ export const CoordinatesFeed = () => {
         {(!isLoading && items.length === 0 )&& (
           <p className={styles.message}>Координаты не найдены</p>
         )}
-        {!isLoading && items.map((item) => (
-          <ShowCoordinatesItem
-            key={item.id}
-            coordinates={item}
-            onClick={() => setSelected(item)}
+        {!isLoading && items.length > 0 && (
+          <DataTable
+            items={items}
+            columns={columns}
+            getRowKey={(coordinates) => coordinates.id}
+            onRowClick={setSelected}
           />
-        ))}
+        )}
       </div>
 
       <CoordinatesPopup

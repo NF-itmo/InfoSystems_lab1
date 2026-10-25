@@ -1,10 +1,32 @@
 import { useEffect, useState } from "react";
 import { initializeMagicCities, useMagicCities, type MagicCity } from "@/05-models/magic-city";
 import { CreateMagicCity } from "@/04-features/create-magic-city";
-import { ShowMagicCityItem } from "@/04-features/show-magic-city-item";
 import { MagicCityPopup } from "@/04-features/magic-city-popup";
 import { useErrorNotify } from "@/06-shared/lib/errorNotifier";
+import { DataTable, type DataTableColumn } from "@/06-shared/ui/data-table";
 import styles from "./index.module.css";
+
+const columns: DataTableColumn<MagicCity>[] = [
+  { key: "name", title: "Название", render: (city) => city.name },
+  { key: "area", title: "Площадь", render: (city) => city.area },
+  { key: "population", title: "Население", render: (city) => city.population },
+  {
+    key: "establishmentDate",
+    title: "Дата основания",
+    render: (city) => city.establishmentDate ?? "-",
+  },
+  { key: "governor", title: "Правитель", render: (city) => city.governor },
+  {
+    key: "capital",
+    title: "Столица",
+    render: (city) => (city.capital ? "Да" : "Нет"),
+  },
+  {
+    key: "populationDensity",
+    title: "Плотность населения",
+    render: (city) => city.populationDensity,
+  },
+];
 
 export const MagicCitiesFeed = () => {
   const items = useMagicCities();
@@ -32,13 +54,14 @@ export const MagicCitiesFeed = () => {
         {(!isLoading && items.length === 0 )&& (
           <p className={styles.message}>Города не найдены</p>
         )}
-        {!isLoading && items.map((item) => (
-          <ShowMagicCityItem
-            key={item.name}
-            city={item}
-            onClick={() => setSelected(item)}
+        {!isLoading && items.length > 0 && (
+          <DataTable
+            items={items}
+            columns={columns}
+            getRowKey={(city) => city.name}
+            onRowClick={setSelected}
           />
-        ))}
+        )}
       </div>
 
       <MagicCityPopup

@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import { initializeRings, useRings, type Ring } from "@/05-models/ring";
 import { CreateRing } from "@/04-features/create-ring";
-import { ShowRingItem } from "@/04-features/show-ring-item";
 import { RingPopup } from "@/04-features/ring-popup";
 import { useErrorNotify } from "@/06-shared/lib/errorNotifier";
+import { DataTable, type DataTableColumn } from "@/06-shared/ui/data-table";
 import styles from "./index.module.css";
+
+const columns: DataTableColumn<Ring>[] = [
+  { key: "name", title: "Название", render: (ring) => ring.name },
+  { key: "power", title: "Сила", render: (ring) => ring.power },
+  { key: "weight", title: "Вес", render: (ring) => ring.weight },
+];
 
 export const RingsFeed = () => {
   const items = useRings();
@@ -32,13 +38,14 @@ export const RingsFeed = () => {
         {(!isLoading && items.length === 0) && (
           <p className={styles.message}>Кольца не найдены</p>
         )}
-        {!isLoading && items.map((item) => (
-          <ShowRingItem
-            key={item.name}
-            ring={item}
-            onClick={() => setSelected(item)}
+        {!isLoading && items.length > 0 && (
+          <DataTable
+            items={items}
+            columns={columns}
+            getRowKey={(ring) => ring.name}
+            onRowClick={setSelected}
           />
-        ))}
+        )}
       </div>
 
       <RingPopup
