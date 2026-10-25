@@ -3,6 +3,7 @@ export {
   deleteBookCreature,
   getAverageDefenseLevel,
   getBookCreature,
+  getBookCreatureWithMaximumCoordinates,
   getBookCreatures,
   updateBookCreature
 } from "./api/book-creatures-api";

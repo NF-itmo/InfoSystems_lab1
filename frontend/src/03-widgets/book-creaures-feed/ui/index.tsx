@@ -14,6 +14,7 @@ import { Pagination } from "@/06-shared/ui/pagination";
 import { BookCreaturePopup } from "@/04-features/book-creature-popup";
 import { CalculateAverageDefenseLevel } from "@/04-features/calculate-average-defense-level";
 import { CreateBookCreature } from "@/04-features/create-book-creature";
+import { FindBookCreatureWithMaximumCoordinates } from "@/04-features/find-book-creature-with-maximum-coordinates";
 import { SearchBookCreatures } from "@/04-features/search-book-creatures";
 import styles from "./index.module.css";
 
@@ -103,6 +104,7 @@ export const BookCreaturesFeed = () => {
         <h1 className={styles.title}>Существа книги</h1>
         <div className={styles.actions}>
           <CalculateAverageDefenseLevel/>
+          <FindBookCreatureWithMaximumCoordinates onFound={setSelectedBook}/>
           <CreateBookCreature onCreated={reloadBooks}/>
         </div>
       </div>

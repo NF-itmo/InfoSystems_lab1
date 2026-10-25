@@ -34,6 +34,10 @@ export const getAverageDefenseLevel = async (): Promise<AverageDefenseLevelRespo
   );
 };
 
+export const getBookCreatureWithMaximumCoordinates = async (): Promise<BookCreature> => {
+  return request<BookCreature>(`${BOOK_CREATURES_API_PATH}/max-cords`);
+};
+
 export const createBookCreature = async (
   payload: BookCreatureWriteRequest,
 ): Promise<CreateBookCreatureResponse> => {

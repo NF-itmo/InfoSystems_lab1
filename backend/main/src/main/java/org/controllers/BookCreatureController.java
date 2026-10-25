@@ -61,6 +61,15 @@ public class BookCreatureController {
     }
 
     @GET
+    @Path("/max-cords")
+    public GetBookCreatureResponse findByMaximumCoordinates() {
+        return GetBookCreatureResponse.fromServiceDto(
+                bookCreatureService.findByMaximumCoordinates()
+                        .orElseThrow(() -> new NotFoundException("No book creatures exist"))
+        );
+    }
+
+    @GET
     @Path("/{id}")
     public GetBookCreatureResponse findById(
             @PathParam("id") @Min(1) int id

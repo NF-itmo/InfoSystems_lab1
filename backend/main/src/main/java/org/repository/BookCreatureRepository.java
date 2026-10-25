@@ -38,4 +38,16 @@ public interface BookCreatureRepository extends CrudRepository<BookCreature, Int
 
     @Query("SELECT AVG(creature.defenseLevel) FROM BookCreature creature")
     Double findAverageDefenseLevel();
+
+    @Query("""
+            SELECT creature FROM BookCreature creature
+            JOIN FETCH creature.coordinates
+            LEFT JOIN FETCH creature.creatureLocationName
+            LEFT JOIN FETCH creature.ringName
+            ORDER BY (
+                creature.coordinates.x * creature.coordinates.x
+                + creature.coordinates.y * creature.coordinates.y
+            ) DESC, creature.id
+            """)
+    List<BookCreature> findByMaximumCoordinates(Limit limit);
 }
