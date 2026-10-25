@@ -20,6 +20,7 @@ import org.controllers.DTO.bookCreature.CreateBookCreatureRequest;
 import org.controllers.DTO.bookCreature.CreateBookCreatureResponse;
 import org.controllers.DTO.bookCreature.GetAverageDefenseLevelResponse;
 import org.controllers.DTO.bookCreature.GetBookCreatureResponse;
+import org.controllers.DTO.bookCreature.GetRingCountResponse;
 import org.controllers.DTO.bookCreature.UpdateBookCreatureRequest;
 import org.services.BookCreatureService;
 
@@ -66,6 +67,16 @@ public class BookCreatureController {
         return GetBookCreatureResponse.fromServiceDto(
                 bookCreatureService.findByMaximumCoordinates()
                         .orElseThrow(() -> new NotFoundException("No book creatures exist"))
+        );
+    }
+
+    @GET
+    @Path("/ring-count")
+    public GetRingCountResponse countByRingPowerGreaterThan(
+            @QueryParam("power") @NotNull @Positive Integer power
+    ) {
+        return new GetRingCountResponse(
+                bookCreatureService.countByRingPowerGreaterThan(power)
         );
     }
 

@@ -5,6 +5,7 @@ import type {
   BookCreatureFilters,
   BookCreatureWriteRequest,
   AverageDefenseLevelResponse,
+  RingCountResponse,
   CreateBookCreatureResponse
 } from "../model/types";
 
@@ -36,6 +37,10 @@ export const getAverageDefenseLevel = async (): Promise<AverageDefenseLevelRespo
 
 export const getBookCreatureWithMaximumCoordinates = async (): Promise<BookCreature> => {
   return request<BookCreature>(`${BOOK_CREATURES_API_PATH}/max-cords`);
+};
+
+export const getRingCountGreaterThan = async (power: number): Promise<RingCountResponse> => {
+  return request<RingCountResponse>(`${BOOK_CREATURES_API_PATH}/ring-count?power=${power}`);
 };
 
 export const createBookCreature = async (

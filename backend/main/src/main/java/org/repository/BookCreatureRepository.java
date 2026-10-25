@@ -50,4 +50,10 @@ public interface BookCreatureRepository extends CrudRepository<BookCreature, Int
             ) DESC, creature.id
             """)
     List<BookCreature> findByMaximumCoordinates(Limit limit);
+
+    @Query("""
+            SELECT COUNT(creature) FROM BookCreature creature
+            WHERE creature.ringName.power >= ?1
+            """)
+    long countByRingPowerGreaterThan(int power);
 }

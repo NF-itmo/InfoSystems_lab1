@@ -54,6 +54,11 @@ public class BookCreatureService {
     }
 
     @Transactional
+    public long countByRingPowerGreaterThan(int power) {
+        return bookRepository.countByRingPowerGreaterThan(power);
+    }
+
+    @Transactional
     public Optional<BookCreatureDto> update(int id, BookCreatureDto dto) {
         return bookRepository.findById(id)
                 .map(existing -> {

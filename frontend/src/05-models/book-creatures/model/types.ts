@@ -41,3 +41,7 @@ export type CreateBookCreatureResponse = {
 export type AverageDefenseLevelResponse = {
   averageDefenseLevel: number | null;
 };
+
+export type RingCountResponse = {
+  count: number;
+};

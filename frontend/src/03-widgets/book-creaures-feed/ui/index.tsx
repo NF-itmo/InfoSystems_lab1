@@ -13,6 +13,7 @@ import {
 import { Pagination } from "@/06-shared/ui/pagination";
 import { BookCreaturePopup } from "@/04-features/book-creature-popup";
 import { CalculateAverageDefenseLevel } from "@/04-features/calculate-average-defense-level";
+import { CountBookCreaturesWithMorePowerfulRing } from "@/04-features/count-book-creatures-with-more-powerful-ring";
 import { CreateBookCreature } from "@/04-features/create-book-creature";
 import { FindBookCreatureWithMaximumCoordinates } from "@/04-features/find-book-creature-with-maximum-coordinates";
 import { SearchBookCreatures } from "@/04-features/search-book-creatures";
@@ -105,6 +106,7 @@ export const BookCreaturesFeed = () => {
         <div className={styles.actions}>
           <CalculateAverageDefenseLevel/>
           <FindBookCreatureWithMaximumCoordinates onFound={setSelectedBook}/>
+          <CountBookCreaturesWithMorePowerfulRing/>
           <CreateBookCreature onCreated={reloadBooks}/>
         </div>
       </div>
