@@ -1,6 +1,7 @@
 export {
   createBookCreature,
   deleteBookCreature,
+  getAverageDefenseLevel,
   getBookCreature,
   getBookCreatures,
   updateBookCreature
@@ -18,6 +19,7 @@ export type {
   BookCreature,
   BookCreatureFilters,
   BookCreatureType,
+  AverageDefenseLevelResponse,
   BookCreatureWriteRequest,
   CreateBookCreatureResponse
 } from "./model/types";

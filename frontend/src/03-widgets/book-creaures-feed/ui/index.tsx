@@ -12,6 +12,7 @@ import {
 } from "@/06-shared/ui/data-table";
 import { Pagination } from "@/06-shared/ui/pagination";
 import { BookCreaturePopup } from "@/04-features/book-creature-popup";
+import { CalculateAverageDefenseLevel } from "@/04-features/calculate-average-defense-level";
 import { CreateBookCreature } from "@/04-features/create-book-creature";
 import { SearchBookCreatures } from "@/04-features/search-book-creatures";
 import styles from "./index.module.css";
@@ -100,7 +101,10 @@ export const BookCreaturesFeed = () => {
     <section className={styles.feed}>
       <div className={styles.header}>
         <h1 className={styles.title}>Существа книги</h1>
-        <CreateBookCreature onCreated={reloadBooks}/>
+        <div className={styles.actions}>
+          <CalculateAverageDefenseLevel/>
+          <CreateBookCreature onCreated={reloadBooks}/>
+        </div>
       </div>
 
       <SearchBookCreatures onSearch={search}/>

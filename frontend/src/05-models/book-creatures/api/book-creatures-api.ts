@@ -4,6 +4,7 @@ import type {
   BookCreature,
   BookCreatureFilters,
   BookCreatureWriteRequest,
+  AverageDefenseLevelResponse,
   CreateBookCreatureResponse
 } from "../model/types";
 
@@ -25,6 +26,12 @@ export const getBookCreatures = async (
 
 export const getBookCreature = async (id: number): Promise<BookCreature> => {
   return request<BookCreature>(`${BOOK_CREATURES_API_PATH}/${id}`);
+};
+
+export const getAverageDefenseLevel = async (): Promise<AverageDefenseLevelResponse> => {
+  return request<AverageDefenseLevelResponse>(
+    `${BOOK_CREATURES_API_PATH}/avg-def-level`
+  );
 };
 
 export const createBookCreature = async (

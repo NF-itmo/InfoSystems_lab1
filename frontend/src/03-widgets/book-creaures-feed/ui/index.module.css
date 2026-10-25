@@ -16,6 +16,11 @@
       font-size: 1rem;
       font-weight: 400;
     }
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
   .content {
     display: flex;
     flex-wrap: wrap;

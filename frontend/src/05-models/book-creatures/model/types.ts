@@ -37,3 +37,7 @@ export type BookCreatureWriteRequest = {
 export type CreateBookCreatureResponse = {
   id: number;
 };
+
+export type AverageDefenseLevelResponse = {
+  averageDefenseLevel: number | null;
+};
