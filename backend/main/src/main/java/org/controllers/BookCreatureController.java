@@ -90,6 +90,15 @@ public class BookCreatureController {
     }
 
     @GET
+    @Path("/strongest-ring-owner")
+    public GetBookCreatureResponse findByMaximumRingPower() {
+        return GetBookCreatureResponse.fromServiceDto(
+                bookCreatureService.findByMaximumRingPower()
+                        .orElseThrow(() -> new NotFoundException("No book creatures with rings exist"))
+        );
+    }
+
+    @GET
     @Path("/{id}")
     public GetBookCreatureResponse findById(
             @PathParam("id") @Min(1) int id

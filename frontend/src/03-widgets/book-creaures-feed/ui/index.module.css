@@ -19,8 +19,16 @@
   .actions {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
     gap: 8px;
+
+    max-width: 60%;
   }
+    .actions > button {
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
   .content {
     display: flex;
     flex-wrap: wrap;

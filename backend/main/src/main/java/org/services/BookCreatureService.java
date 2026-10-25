@@ -65,6 +65,13 @@ public class BookCreatureService {
     }
 
     @Transactional
+    public Optional<BookCreatureDto> findByMaximumRingPower() {
+        return bookRepository.findByMaximumRingPower(Limit.range(1, 1)).stream()
+                .findFirst()
+                .map(BookCreatureDto::fromModel);
+    }
+
+    @Transactional
     public Optional<BookCreatureDto> update(int id, BookCreatureDto dto) {
         return bookRepository.findById(id)
                 .map(existing -> {

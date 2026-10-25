@@ -64,4 +64,13 @@ public interface BookCreatureRepository extends CrudRepository<BookCreature, Int
             WHERE creature.creatureType = ?1
             """)
     long removeRingsByCreatureType(BookCreatureType creatureType);
+
+    @Query("""
+            SELECT creature FROM BookCreature creature
+            JOIN FETCH creature.coordinates
+            JOIN FETCH creature.ringName
+            LEFT JOIN FETCH creature.creatureLocationName
+            ORDER BY creature.ringName.power DESC, creature.id
+            """)
+    List<BookCreature> findByMaximumRingPower(Limit limit);
 }

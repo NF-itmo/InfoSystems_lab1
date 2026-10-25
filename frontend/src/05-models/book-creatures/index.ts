@@ -4,6 +4,7 @@ export {
   getAverageDefenseLevel,
   getBookCreature,
   getBookCreatureWithMaximumCoordinates,
+  getBookCreatureWithStrongestRing,
   getBookCreatures,
   getRingCountGreaterThan,
   takeRingsFromHobbits,

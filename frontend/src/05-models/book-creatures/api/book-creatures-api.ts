@@ -51,6 +51,10 @@ export const takeRingsFromHobbits = async (): Promise<TakeRingsFromHobbitsRespon
   );
 };
 
+export const getBookCreatureWithStrongestRing = async (): Promise<BookCreature> => {
+  return request<BookCreature>(`${BOOK_CREATURES_API_PATH}/strongest-ring-owner`);
+};
+
 export const createBookCreature = async (
   payload: BookCreatureWriteRequest,
 ): Promise<CreateBookCreatureResponse> => {
