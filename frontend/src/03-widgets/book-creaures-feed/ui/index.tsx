@@ -17,6 +17,7 @@ import { CountBookCreaturesWithMorePowerfulRing } from "@/04-features/count-book
 import { CreateBookCreature } from "@/04-features/create-book-creature";
 import { FindBookCreatureWithMaximumCoordinates } from "@/04-features/find-book-creature-with-maximum-coordinates";
 import { SearchBookCreatures } from "@/04-features/search-book-creatures";
+import { TakeRingsFromHobbits } from "@/04-features/take-rings-from-hobbits";
 import styles from "./index.module.css";
 
 const PAGE_SIZE = 5;
@@ -107,6 +108,7 @@ export const BookCreaturesFeed = () => {
           <CalculateAverageDefenseLevel/>
           <FindBookCreatureWithMaximumCoordinates onFound={setSelectedBook}/>
           <CountBookCreaturesWithMorePowerfulRing/>
+          <TakeRingsFromHobbits onCompleted={reloadBooks}/>
           <CreateBookCreature onCreated={reloadBooks}/>
         </div>
       </div>

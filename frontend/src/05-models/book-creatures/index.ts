@@ -6,6 +6,7 @@ export {
   getBookCreatureWithMaximumCoordinates,
   getBookCreatures,
   getRingCountGreaterThan,
+  takeRingsFromHobbits,
   updateBookCreature
 } from "./api/book-creatures-api";
 
@@ -24,5 +25,6 @@ export type {
   AverageDefenseLevelResponse,
   BookCreatureWriteRequest,
   CreateBookCreatureResponse,
-  RingCountResponse
+  RingCountResponse,
+  TakeRingsFromHobbitsResponse
 } from "./model/types";

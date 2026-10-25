@@ -21,6 +21,7 @@ import org.controllers.DTO.bookCreature.CreateBookCreatureResponse;
 import org.controllers.DTO.bookCreature.GetAverageDefenseLevelResponse;
 import org.controllers.DTO.bookCreature.GetBookCreatureResponse;
 import org.controllers.DTO.bookCreature.GetRingCountResponse;
+import org.controllers.DTO.bookCreature.TakeRingsFromHobbitsResponse;
 import org.controllers.DTO.bookCreature.UpdateBookCreatureRequest;
 import org.services.BookCreatureService;
 
@@ -77,6 +78,14 @@ public class BookCreatureController {
     ) {
         return new GetRingCountResponse(
                 bookCreatureService.countByRingPowerGreaterThan(power)
+        );
+    }
+
+    @POST
+    @Path("/take-rings-from-hobbits")
+    public TakeRingsFromHobbitsResponse takeRingsFromHobbits() {
+        return new TakeRingsFromHobbitsResponse(
+                bookCreatureService.removeRingsFromHobbits()
         );
     }
 

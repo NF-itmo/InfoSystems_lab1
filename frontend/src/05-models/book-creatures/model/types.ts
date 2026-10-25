@@ -45,3 +45,7 @@ export type AverageDefenseLevelResponse = {
 export type RingCountResponse = {
   count: number;
 };
+
+export type TakeRingsFromHobbitsResponse = {
+  affectedCount: number;
+};

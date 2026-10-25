@@ -6,6 +6,7 @@ import type {
   BookCreatureWriteRequest,
   AverageDefenseLevelResponse,
   RingCountResponse,
+  TakeRingsFromHobbitsResponse,
   CreateBookCreatureResponse
 } from "../model/types";
 
@@ -41,6 +42,13 @@ export const getBookCreatureWithMaximumCoordinates = async (): Promise<BookCreat
 
 export const getRingCountGreaterThan = async (power: number): Promise<RingCountResponse> => {
   return request<RingCountResponse>(`${BOOK_CREATURES_API_PATH}/ring-count?power=${power}`);
+};
+
+export const takeRingsFromHobbits = async (): Promise<TakeRingsFromHobbitsResponse> => {
+  return request<TakeRingsFromHobbitsResponse>(
+    `${BOOK_CREATURES_API_PATH}/take-rings-from-hobbits`,
+    { method: "POST" }
+  );
 };
 
 export const createBookCreature = async (

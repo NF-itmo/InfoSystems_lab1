@@ -5,6 +5,7 @@ import jakarta.data.repository.CrudRepository;
 import jakarta.data.repository.Query;
 import jakarta.data.repository.Repository;
 import org.models.BookCreature;
+import org.models.BookCreatureType;
 
 import java.util.List;
 import java.util.Optional;
@@ -56,4 +57,11 @@ public interface BookCreatureRepository extends CrudRepository<BookCreature, Int
             WHERE creature.ringName.power >= ?1
             """)
     long countByRingPowerGreaterThan(int power);
+
+    @Query("""
+            UPDATE BookCreature creature
+            SET creature.ringName = NULL
+            WHERE creature.creatureType = ?1
+            """)
+    long removeRingsByCreatureType(BookCreatureType creatureType);
 }

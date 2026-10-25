@@ -5,6 +5,7 @@ import jakarta.data.Limit;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.repository.BookCreatureRepository;
+import org.models.BookCreatureType;
 import org.services.DTO.BookCreatureDto;
 import org.services.DTO.PageDto;
 
@@ -56,6 +57,11 @@ public class BookCreatureService {
     @Transactional
     public long countByRingPowerGreaterThan(int power) {
         return bookRepository.countByRingPowerGreaterThan(power);
+    }
+
+    @Transactional
+    public long removeRingsFromHobbits() {
+        return bookRepository.removeRingsByCreatureType(BookCreatureType.HOBBIT);
     }
 
     @Transactional
