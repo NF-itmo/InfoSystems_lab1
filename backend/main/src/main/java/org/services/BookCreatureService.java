@@ -42,6 +42,11 @@ public class BookCreatureService {
     }
 
     @Transactional
+    public Double findAverageDefenseLevel() {
+        return bookRepository.findAverageDefenseLevel();
+    }
+
+    @Transactional
     public Optional<BookCreatureDto> update(int id, BookCreatureDto dto) {
         return bookRepository.findById(id)
                 .map(existing -> {

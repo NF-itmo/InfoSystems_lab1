@@ -35,4 +35,7 @@ public interface BookCreatureRepository extends CrudRepository<BookCreature, Int
             WHERE LOWER(creature.name) LIKE CONCAT('%', LOWER(?1), '%')
             """)
     long countByNamePattern(String pattern);
+
+    @Query("SELECT AVG(creature.defenseLevel) FROM BookCreature creature")
+    Double findAverageDefenseLevel();
 }

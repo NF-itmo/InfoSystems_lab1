@@ -18,6 +18,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.controllers.DTO.bookCreature.CreateBookCreatureRequest;
 import org.controllers.DTO.bookCreature.CreateBookCreatureResponse;
+import org.controllers.DTO.bookCreature.GetAverageDefenseLevelResponse;
 import org.controllers.DTO.bookCreature.GetBookCreatureResponse;
 import org.controllers.DTO.bookCreature.UpdateBookCreatureRequest;
 import org.services.BookCreatureService;
@@ -49,6 +50,14 @@ public class BookCreatureController {
                 .getItems().stream()
                 .map(GetBookCreatureResponse::fromServiceDto)
                 .toList();
+    }
+
+    @GET
+    @Path("/avg-def-level")
+    public GetAverageDefenseLevelResponse findAverageDefenseLevel() {
+        return new GetAverageDefenseLevelResponse(
+                bookCreatureService.findAverageDefenseLevel()
+        );
     }
 
     @GET
