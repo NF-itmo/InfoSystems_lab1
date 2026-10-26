@@ -8,7 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "coordinates")
+@Table(name = "Coordinates", schema = "s467233")
 @Builder @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 public class Coordinate {

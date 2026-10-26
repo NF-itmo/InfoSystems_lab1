@@ -134,9 +134,11 @@
                             pool-name="PostgresDS"
                             enabled="true"
                             use-java-context="true">
-                    <connection-url>jdbc:postgresql://database:5432/db</connection-url>
+                    <connection-url>
+                        jdbc:postgresql://${env.DB_HOST:database}:${env.DB_PORT:5432}/${env.DB_NAME:db}
+                    </connection-url>
                     <driver>postgresql</driver>
-                    <security user-name="admin" password="horse_ate_green_guinea_pig"/>
+                    <security user-name="${env.DB_USER:admin}" password="${env.DB_PASSWORD:horse_ate_green_guinea_pig}"/>
                 </datasource>
                 <drivers>
                     <driver name="postgresql" module="org.postgresql">
@@ -169,7 +171,7 @@
             <local-routing/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:ee:6.0">
-            <spec-descriptor-property-replacement>false</spec-descriptor-property-replacement>
+            <spec-descriptor-property-replacement>true</spec-descriptor-property-replacement>
             <concurrent>
             </concurrent>
         </subsystem>

@@ -11,7 +11,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "magiccity")
+@Table(name = "MagicCity", schema = "s467233")
 @Builder @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 public class MagicCity {

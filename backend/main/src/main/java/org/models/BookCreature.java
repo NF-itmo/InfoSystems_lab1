@@ -12,7 +12,7 @@ import org.hibernate.generator.EventType;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "BookCreature")
+@Table(name = "BookCreature", schema = "s467233")
 @Builder @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 public class BookCreature {
