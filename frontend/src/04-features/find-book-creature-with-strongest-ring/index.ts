@@ -1,0 +1,1 @@
+export { FindBookCreatureWithStrongestRing } from "./ui";

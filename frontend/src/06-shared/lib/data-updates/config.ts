@@ -1,0 +1,1 @@
+export const DATA_UPDATES_PATH = "/updates";

@@ -1,0 +1,38 @@
+services:
+  database:
+    image: postgres:13.3
+    restart: on-failure
+    environment:
+      POSTGRES_DB: "db"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "horse_ate_green_guinea_pig"
+    volumes:
+      - infsys1_db_data:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "db", "-U", "admin"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    networks:
+      - database_net
+    ports:
+      - "5456:5432"
+  
+  backend:
+    image: isys-lab1-backend
+    restart: on-failure
+    depends_on:
+      database:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    networks:
+      - database_net
+
+networks:
+  database_net:
+
+volumes:
+  infsys1_db_data:

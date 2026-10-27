@@ -1,0 +1,49 @@
+.book {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 4px;
+
+  min-width: 100%;
+  min-height: 50px;
+  padding: 10px;
+
+  color: var(--text-secondary);
+
+  background: transparent;
+  
+  border: 1px solid hsl(0, 0%, 28%);
+  border-radius: 4px;
+
+  cursor: pointer;
+  transition: border-color 0.07s ease-out, background-color 0.07s ease-out;
+}
+  .book:hover {
+    background: hsl(0, 0%, 12%);
+    border-color: hsl(0, 0%, 42%);
+  }
+  .bookTitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: var(--text-primary);
+  }
+  .type,
+  .coordinates {
+    margin: 0;
+  }
+  .type {
+    color: hsl(0, 0%, 62%);
+  }
+  .coordinates {
+    color: hsl(0, 0%, 52%);
+    font-size: 0.85rem;
+  }
+  .stats {
+    display: flex;
+    gap: 12px;
+
+    color: hsl(0, 0%, 72%);
+    font-size: 0.85rem;
+  }
